@@ -2,13 +2,15 @@
   <div class="row">
     <app-select v-model="selectedType" :options="allTypes" />
     <div class="col-12 col-md-7 align-items-center">
-      <pokemon-list v-if="!loading" :pokemons="pokemons" />
-      <app-loader v-else />
+      <app-loader v-if="loading" />
+      <pokemon-list :pokemons="pokemons" v-else />
       <button class="btn btn-success mt-2" @click="offset += limit">
         Load more
       </button>
     </div>
-    <pokemon-details class="col-10 col-md-4 mx-auto" v-if="activePokemon" />
+    <transition name="fade" mode="out-in">
+      <pokemon-details class="col-10 col-md-4 mx-auto" v-if="activePokemon" />
+    </transition>
   </div>
 </template>
 
@@ -81,4 +83,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.3s opacity, 0.3s transform;
+}
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(100px);
+}
+.fade-enter {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+</style>

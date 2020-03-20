@@ -18,6 +18,14 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  box-sizing: border-box;
+}
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
 #app {
   position: relative;
   font-family: Avenir, Helvetica, Arial, sans-serif;
