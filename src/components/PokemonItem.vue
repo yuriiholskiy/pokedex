@@ -1,6 +1,6 @@
 <template>
   <div
-    class="col-md-4 col-sm-12"
+    class="col-md-4 col-sm-12 cursor-pointer"
     v-if="pokemon.name"
     @click="setActivePokemon(pokemon)"
   >

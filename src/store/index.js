@@ -3,11 +3,12 @@ import Vuex from 'vuex';
 
 import api from '@/http';
 import {
-  SET_LOADING,
   SET_ACTIVE_TYPE,
   SET_POKEMONS,
   SET_ACTIVE_POKEMON,
   SET_POKEMON_DATA,
+  SET_LOADING,
+  CLEAR_POKEMON_DATA,
   GET_POKEMONS,
   GET_POKEMON_DATA,
   GET_ACTIVE_POKEMON
@@ -16,16 +17,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loading: false,
     pokemons: [],
     allPokemons: [],
     activePokemon: null,
-    selectedValue: 'all'
+    selectedValue: 'all',
+    detailsLoading: false
   },
   mutations: {
-    [SET_LOADING](state, payload) {
-      state.loading = payload;
-    },
     [SET_ACTIVE_TYPE](state, payload) {
       state.selectedValue = payload;
     },
@@ -37,14 +35,19 @@ export default new Vuex.Store({
     },
     [SET_POKEMON_DATA](state, payload) {
       state.allPokemons = [...state.allPokemons, payload];
+    },
+    [CLEAR_POKEMON_DATA](state, payload) {
+      state.allPokemons = state.allPokemons.slice(payload);
+    },
+    [SET_LOADING](state, payload) {
+      state.detailsLoading = payload;
     }
   },
   actions: {
     async [GET_POKEMONS]({ commit }, query) {
-      commit(SET_LOADING, true);
       const pokemons = await api.getPokemons(query);
       commit(SET_POKEMONS, pokemons.results);
-      commit(SET_LOADING, false);
+      return pokemons;
     },
     async [GET_POKEMON_DATA]({ commit }, dataUrl) {
       const data = await api.getPokemonData(dataUrl);
@@ -52,13 +55,18 @@ export default new Vuex.Store({
       return data;
     },
     async [GET_ACTIVE_POKEMON]({ commit }, id) {
+      commit(SET_LOADING, true);
       commit(SET_ACTIVE_POKEMON, null);
       const activePokemon = await api.getPokemonById(id);
       commit(SET_ACTIVE_POKEMON, activePokemon);
+      commit(SET_LOADING, false);
     },
     [SET_ACTIVE_TYPE]({ commit }, type) {
       commit(SET_ACTIVE_TYPE, type);
       commit(SET_ACTIVE_POKEMON, null);
+    },
+    [CLEAR_POKEMON_DATA]({ commit }, limit) {
+      commit(CLEAR_POKEMON_DATA, limit);
     }
   },
   getters: {

@@ -29,6 +29,6 @@ export default {
 <style>
 .custom-select {
   width: 50%;
-  margin: 0 auto;
+  margin-left: 1rem;
 }
 </style>

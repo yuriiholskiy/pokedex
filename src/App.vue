@@ -33,6 +33,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding: 1rem 0;
 }
 .app-header {
   margin-top: 1rem;
