@@ -1,29 +1,9 @@
-# pokedex
+# Pokedex project
 
-## Project setup
-```
-yarn install
-```
+1. For running this project, clone github repo and go in _pokedex_ folder;
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+2. Install dependencies (**npm i** or **yarn**);
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+3. To start in development mode: **npm run serve** or **yarn serve**;
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+4. To create production version: **npm run build** or **yarn build**.
