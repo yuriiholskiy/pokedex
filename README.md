@@ -7,3 +7,5 @@
 3. To start in development mode: **npm run serve** or **yarn serve**;
 
 4. To create production version: **npm run build** or **yarn build**.
+
+Live version here https://yuriiholskiy.github.io/pokedex.
