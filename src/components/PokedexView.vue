@@ -8,7 +8,7 @@
           Load more
         </button>
       </template>
-      <app-alert v-if="isFindPokemonsByType" />
+      <app-alert v-if="isFindPokemonsByType && !loading" />
     </div>
     <app-loader v-if="detailsLoading" fixed-right />
     <transition name="fade" mode="out-in">
