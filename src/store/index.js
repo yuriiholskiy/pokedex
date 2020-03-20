@@ -52,6 +52,7 @@ export default new Vuex.Store({
       return data;
     },
     async [GET_ACTIVE_POKEMON]({ commit }, id) {
+      commit(SET_ACTIVE_POKEMON, null);
       const activePokemon = await api.getPokemonById(id);
       commit(SET_ACTIVE_POKEMON, activePokemon);
     },
