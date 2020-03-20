@@ -8,7 +8,7 @@ const http = async (url) => {
 };
 
 const api = {
-  _url: 'http://pokeapi.co/api/v2/pokemon',
+  _url: 'https://pokeapi.co/api/v2/pokemon',
   getPokemons(query) {
     return http(`${this._url}/?${query}`);
   },
