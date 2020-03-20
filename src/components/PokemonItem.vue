@@ -1,10 +1,10 @@
 <template>
   <div
-    class="col-md-4 col-sm-12 cursor-pointer"
+    class="col-md-4 col-sm-12"
     v-if="pokemon.name"
     @click="setActivePokemon(pokemon)"
   >
-    <div class="card mt-2">
+    <div class="card mt-2 cursor-pointer">
       <img
         class="img"
         :src="pokemon.sprites.front_default"
@@ -59,6 +59,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cursor-pointer {
+  cursor: pointer;
+}
 .img {
   width: 100px;
   height: 100px;

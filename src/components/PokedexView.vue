@@ -8,7 +8,7 @@
           Load more
         </button>
       </template>
-      <app-alert :loading="loading" />
+      <app-alert v-if="isFindPokemonsByType" />
     </div>
     <app-loader v-if="detailsLoading" fixed-right />
     <transition name="fade" mode="out-in">
@@ -74,6 +74,9 @@ export default {
       set(val) {
         this.$store.dispatch(SET_ACTIVE_TYPE, val);
       }
+    },
+    isFilterSet() {
+      return !(this.loading && this.isFindPokemonsByType);
     }
   },
   watch: {
@@ -91,6 +94,7 @@ export default {
         this.$store.dispatch(CLEAR_POKEMON_DATA, this.limit);
       }
       this.loading = true;
+      this.$store.dispatch(SET_ACTIVE_TYPE, 'all');
       // create query and ge initial pokemons data
       const query = `offset=${this.offset}&limit=${this.limit}`;
       await this.$store.dispatch(GET_POKEMONS, query);
