@@ -1,7 +1,11 @@
 <template>
   <div
     class="d-flex justify-content-center text-center"
-    :class="[{ 'fixed-right': fixedRight }, { 'fixed-left': fixedLeft }]"
+    :class="[
+      'fixed',
+      { 'fixed-right': fixedRight },
+      { 'fixed-left': fixedLeft }
+    ]"
   >
     <div
       class="spinner-border"
@@ -30,18 +34,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fixed-right {
-  position: fixed;
-  top: 50%;
-  right: 15%;
-  z-index: 1000;
-  transform: translate(-50%, -50%);
+@media screen and (min-width: 770px) {
+  .fixed {
+    position: fixed;
+    top: 50%;
+    z-index: 1000;
+    transform: translate(-50%, -50%);
+  }
+  .fixed-right {
+    right: 15%;
+  }
+  .fixed-left {
+    left: 15%;
+  }
 }
-.fixed-left {
-  position: fixed;
-  top: 50%;
-  left: 15%;
-  z-index: 1000;
-  transform: translate(-50%, -50%);
+.fixed-left,
+.fixed-right {
+  width: '100%';
+  margin: 1rem auto 0 auto;
 }
 </style>
