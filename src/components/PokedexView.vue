@@ -13,7 +13,7 @@
         <button
           class="btn btn-success"
           @click="offset += limit"
-          v-if="!loading"
+          :disabled="loading"
         >
           Load more
         </button>
