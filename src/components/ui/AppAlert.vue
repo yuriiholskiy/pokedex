@@ -10,7 +10,7 @@ export default {
   props: {
     text: {
       type: String,
-      default: `For now we can't find pokemons with this type. Maybe You need load more`
+      default: `Pokemons`
     }
   }
 };

@@ -2,17 +2,22 @@
   <div class="row">
     <app-select v-model="selectedType" :options="allTypes" />
     <div class="col-12 col-md-7 align-items-center">
+      <template v-if="isFindPokemonsByType && !loading">
+        <app-alert :text="alertText" />
+        <button class="btn btn-primary" @click="clearFilter">
+          Clear filter
+        </button>
+      </template>
       <template v-show="!loading">
         <pokemon-list :loading="loading" />
         <button
-          class="btn btn-success mt-2"
+          class="btn btn-success"
           @click="offset += limit"
-          :disabled="loading"
+          v-if="!loading"
         >
           Load more
         </button>
       </template>
-      <app-alert v-if="isFindPokemonsByType && !loading" />
     </div>
     <app-loader v-if="detailsLoading" fixed-right />
     <transition name="fade" mode="out-in">
@@ -38,6 +43,8 @@ export default {
   name: 'pokedex-view',
   data() {
     return {
+      alertText: `For now we can't find pokemons with this type. 
+                  You can just reset filter or load more pokemons(it will reset filter also)`,
       loading: true,
       limit: 12,
       offset: 0,
@@ -107,6 +114,9 @@ export default {
         await this.$store.dispatch(GET_POKEMON_DATA, url);
         this.loading = false;
       });
+    },
+    clearFilter() {
+      this.$store.dispatch(SET_ACTIVE_TYPE, 'all');
     }
   },
   components: {
