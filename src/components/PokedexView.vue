@@ -4,7 +4,11 @@
     <div class="col-12 col-md-7 align-items-center">
       <template v-show="!loading">
         <pokemon-list :loading="loading" />
-        <button class="btn btn-success mt-2" @click="offset += limit">
+        <button
+          class="btn btn-success mt-2"
+          @click="offset += limit"
+          :disabled="loading"
+        >
           Load more
         </button>
       </template>

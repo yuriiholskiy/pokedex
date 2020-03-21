@@ -6,7 +6,7 @@
       :pokemon="pokemon"
       :selectedType="selectedType"
     />
-    <app-loader v-if="loading" />
+    <app-loader v-if="loading" horizontal />
   </div>
 </template>
 
