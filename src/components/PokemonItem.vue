@@ -29,7 +29,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { GET_ACTIVE_POKEMON } from '@/store/consts';
+import { GET_ACTIVE_POKEMON, SET_ACTIVE_POKEMON } from '@/store/consts';
 export default {
   name: 'pokemon-item',
   props: {
@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     ...mapState(['activePokemon']),
-    ...mapGetters(['filteredPokemonByType']),
+    ...mapGetters(['filteredPokemonByType', 'activePokemonCache']),
     types() {
       // getting just types for classes
       return this.pokemon.types.map(({ type: { name } }) => name);
@@ -52,7 +52,12 @@ export default {
       if (this.activePokemon && this.activePokemon.name === name) {
         return;
       }
-      this.$store.dispatch(GET_ACTIVE_POKEMON, id);
+      // if we have pokemon in cache, get from cache, otherwise get request
+      // for decrease quantity of requests
+      const cachePokemon = this.activePokemonCache[id];
+      cachePokemon
+        ? this.$store.commit(SET_ACTIVE_POKEMON, cachePokemon)
+        : this.$store.dispatch(GET_ACTIVE_POKEMON, id);
     }
   }
 };

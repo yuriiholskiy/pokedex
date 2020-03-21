@@ -8,6 +8,7 @@ import {
   SET_ACTIVE_POKEMON,
   SET_POKEMON_DATA,
   SET_LOADING,
+  SET_CACHING_ACTIVE_POKEMON,
   CLEAR_POKEMON_DATA,
   GET_POKEMONS,
   GET_POKEMON_DATA,
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     pokemons: [],
     allPokemons: [],
     activePokemon: null,
+    cacheActivePokemon: {},
     selectedValue: 'all',
     detailsLoading: false
   },
@@ -41,6 +43,9 @@ export default new Vuex.Store({
     },
     [SET_LOADING](state, payload) {
       state.detailsLoading = payload;
+    },
+    [SET_CACHING_ACTIVE_POKEMON](state, { id, item }) {
+      state.cacheActivePokemon[id] = item;
     }
   },
   actions: {
@@ -54,11 +59,15 @@ export default new Vuex.Store({
       commit(SET_POKEMON_DATA, data);
       return data;
     },
-    async [GET_ACTIVE_POKEMON]({ commit }, id) {
+    async [GET_ACTIVE_POKEMON]({ state, commit }, id) {
       commit(SET_LOADING, true);
-      commit(SET_ACTIVE_POKEMON, null);
+      if (state.activePokemon) {
+        commit(SET_ACTIVE_POKEMON, null);
+      }
       const activePokemon = await api.getPokemonById(id);
       commit(SET_ACTIVE_POKEMON, activePokemon);
+      // caching activePokemons
+      commit(SET_CACHING_ACTIVE_POKEMON, { id, item: activePokemon });
       commit(SET_LOADING, false);
     },
     [SET_ACTIVE_TYPE]({ commit }, type) {
@@ -80,6 +89,9 @@ export default new Vuex.Store({
     },
     isFindPokemonsByType(_, getters) {
       return !getters.filteredPokemonByType.length;
+    },
+    activePokemonCache({ cacheActivePokemon }) {
+      return cacheActivePokemon;
     }
   }
 });
